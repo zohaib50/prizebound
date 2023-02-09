@@ -1,5 +1,5 @@
 <template>
-    <form class="form" method="post" @submit.prevent="postData">
+    <form class="form" method="post" @submit.prevent="putData">
 
         <div class="mb-3 row">
             <label class="col-sm-4 col-form-label text-end">Category:</label>
@@ -41,7 +41,7 @@
         <div class="mb-3 row">
             <label for="inputPassword" class="col-sm-4 col-form-label text-end">Bound List:</label>
             <div class="col-sm-8">
-                <textarea  v-model="form.list" class="form-control" :class="errors.list ? 'is-invalid' : ''" rows="10" placeholder="Bound List">=</textarea>
+                <input type="text" v-model="form.list" class="form-control" :class="errors.list ? 'is-invalid' : ''" placeholder="Bound List">
                 <span v-if="errors.list" class="invalid-feedback" role="alert">
                     <strong>{{errors.list[0]}}</strong>
                 </span>
@@ -50,7 +50,7 @@
         <div class="mb-3 row">
             <label class="col-sm-4 col-form-label text-end"></label>
             <div class="col-sm-8">
-                <button type="submit" class="btn btn-sm btn-primary px-5">Save</button>
+                <button type="submit" class="btn btn-sm btn-primary px-5">Update</button>
             </div>
         </div>
     </form>
@@ -58,14 +58,17 @@
 
 <script>
 export default {
-    name: "categoryList",
+    props:{
+        bound:Object,
+    },
+    name: "yourBoundCreate",
     data(){
         return{
             form:{
-              category:null,
-              year:null,
-              type:'third',
-              list:null,
+                category:null,
+                year:null,
+                type:'third',
+                list:null,
             },
             categoriesList:[],
             yearsList:[],
@@ -73,17 +76,24 @@ export default {
         }
     },
     mounted() {
+        console.log(this.bound)
         this.getCategory()
+        this.getYear(this.bound.bound_category_id)
+        this.form.category = this.bound.bound_category_id
+        this.form.year = this.bound.bound_year_id
+        this.form.type = this.bound.type
+        this.form.list = this.bound.bound_no
+
     },
     methods:{
-        postData(){
-          axios.post('/bound/api/number', this.form).then(response => {
-              if(response.status == 200){
-                  window.location.href = '/bound/list'
-              }
-          }).catch(errors => {
+        putData(){
+            axios.put('/bound/api/your/bound/'+this.bound.id, this.form).then(response => {
+                if(response.status == 200){
+                    window.location.href = '/bound/your'
+                }
+            }).catch(errors => {
                 this.errors = errors.response.data.errors
-          })
+            })
         },
         getCategory(){
             axios.get('bound/api/categories/select2').then(response => {

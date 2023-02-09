@@ -5,16 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div>Your Bound</div>
+                            <div>
+                                <a href="{{route('bound.your.index')}}" class="px-3 btn btn-primary btn-sm">
+                                    List
+                                </a>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('You are logged in!') }}
+                        <div class="p-3">
+                            <your-bound-edit :bound="{{$yourBound}}"></your-bound-edit>
+                        </div>
                     </div>
                 </div>
             </div>

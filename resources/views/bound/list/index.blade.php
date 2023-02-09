@@ -17,7 +17,7 @@
                     </div>
 
                     <div class="card-body">
-                        <bound-category-list></bound-category-list>
+                        <bound-no-list></bound-no-list>
                     </div>
                 </div>
             </div>

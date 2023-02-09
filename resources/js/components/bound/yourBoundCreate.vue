@@ -58,14 +58,14 @@
 
 <script>
 export default {
-    name: "categoryList",
+    name: "yourBoundCreate",
     data(){
         return{
             form:{
-              category:null,
-              year:null,
-              type:'third',
-              list:null,
+                category:null,
+                year:null,
+                type:'third',
+                list:null,
             },
             categoriesList:[],
             yearsList:[],
@@ -77,13 +77,13 @@ export default {
     },
     methods:{
         postData(){
-          axios.post('/bound/api/number', this.form).then(response => {
-              if(response.status == 200){
-                  window.location.href = '/bound/list'
-              }
-          }).catch(errors => {
+            axios.post('/bound/api/your/bound', this.form).then(response => {
+                if(response.status == 200){
+                    window.location.href = '/bound/your'
+                }
+            }).catch(errors => {
                 this.errors = errors.response.data.errors
-          })
+            })
         },
         getCategory(){
             axios.get('bound/api/categories/select2').then(response => {

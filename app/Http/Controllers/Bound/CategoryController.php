@@ -143,4 +143,8 @@ class CategoryController extends Controller
         BoundCategory::where('id', $id)->delete();
         return response()->json('success');
     }
+    public function select2(){
+        $categories = BoundCategory::select('id', 'name as text')->get();
+        return response()->json($categories);
+    }
 }

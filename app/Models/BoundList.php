@@ -8,5 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class BoundList extends Model
 {
     use HasFactory;
+    public function category(){
+        return $this->belongsTo(BoundCategory::class, 'bound_category_id', 'id');
+    }
+    public function year(){
+        return $this->belongsTo(BoundYear::class, 'bound_year_id', 'id');
+    }
 
 }

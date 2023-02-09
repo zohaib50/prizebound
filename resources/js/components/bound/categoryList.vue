@@ -25,7 +25,7 @@
             </thead>
             <tbody>
             <tr v-for="(item, index) in items">
-                <td class="p-2">{{index+1}}</td>
+                <td class="p-2">{{laravelData.from+index}}</td>
                 <td class="p-2">{{item.name}}</td>
                 <td class="p-2">{{item.years_count}}</td>
                 <td class="p-2 text-end">
@@ -54,10 +54,15 @@
         </table>
         <div class="d-flex justify-content-between">
             <div>
-
+                <select class="form-select form-select-sm" v-model="limit" @change="getData">
+                    <option :value="10">10</option>
+                    <option :value="50">50</option>
+                    <option :value="100">100</option>
+                    <option :value="500">5000</option>
+                </select>
             </div>
-            <div>
-<!--                <Pagination :data="laravelData" @pagination-change-page="getData" />-->
+            <div v-if="laravelData">
+                <Pagination :data="laravelData" :limit="1" @pagination-change-page="getData" />
             </div>
         </div>
     </div>
@@ -79,7 +84,7 @@ export default {
     },
     methods:{
         getData(page= 1){
-            axios.get('/bound/api/categories?search='+this.search+'&limit='+this.limit).then(response => {
+            axios.get('/bound/api/categories?page='+page+'&search='+this.search+'&limit='+this.limit).then(response => {
                 this.items = response.data.data
                 this.laravelData = response.data
                 console.log(this.laravelData)

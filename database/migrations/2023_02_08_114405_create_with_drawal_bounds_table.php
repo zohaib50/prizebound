@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('you_bounds', function (Blueprint $table) {
+        Schema::create('with_drawal_bounds', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('you_bounds');
+        Schema::dropIfExists('with_drawal_bounds');
     }
 };

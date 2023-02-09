@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bound;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Select2\YearResource;
 use App\Models\BoundCategory;
 use App\Models\BoundYear;
 use App\Models\CategoryYearMapping;
@@ -138,5 +139,17 @@ class YearController extends Controller
     {
         BoundYear::where('id', $id)->delete();
         return response()->json('success');
+    }
+    public function select2($cid){
+//        $years = BoundYear::with(['categories' => function($query) use ($cid){
+//            $query->where('bound_category_id', $cid);
+//        }])->get();
+//        return response()->json($years);
+
+
+        $categoryYearMapping = CategoryYearMapping::where('bound_category_id', $cid)->with('year')->get();
+        $resourcesYear = YearResource::collection($categoryYearMapping);
+
+        return response()->json($resourcesYear);
     }
 }
